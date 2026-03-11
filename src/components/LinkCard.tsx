@@ -1,6 +1,5 @@
 import { motion } from "framer-motion"
 import { ChevronRight, type LucideIcon } from "lucide-react"
-import { useNavigate } from "react-router-dom"
 
 interface LinkCardProps {
   title: string
@@ -9,56 +8,52 @@ interface LinkCardProps {
   icon: LucideIcon
 }
 
-const cardStyle = {
-  background: "rgba(255, 255, 255, 0.45)",
-  backdropFilter: "blur(40px) saturate(180%)",
-  WebkitBackdropFilter: "blur(40px) saturate(180%)",
-  boxShadow: `
-    inset 0 1px 1px rgba(255, 255, 255, 0.9),
-    inset 0 -1px 1px rgba(255, 255, 255, 0.1),
-    0 0 0 1px rgba(255, 255, 255, 0.6),
-    0 2px 4px rgba(0, 0, 0, 0.02),
-    0 4px 8px rgba(0, 0, 0, 0.04),
-    0 8px 16px rgba(0, 0, 0, 0.06),
-    0 16px 32px rgba(0, 0, 0, 0.08),
-    0 32px 64px rgba(0, 0, 0, 0.06)
-  `,
-  border: "1px solid rgba(255, 255, 255, 0.5)",
-}
-
-const hoverBoxShadow = `
-  inset 0 1px 1px rgba(255, 255, 255, 1),
-  inset 0 -1px 1px rgba(255, 255, 255, 0.2),
-  0 0 0 1px rgba(255, 255, 255, 0.7),
-  0 4px 8px rgba(0, 0, 0, 0.04),
-  0 8px 16px rgba(0, 0, 0, 0.06),
-  0 16px 32px rgba(0, 0, 0, 0.08),
-  0 32px 64px rgba(0, 0, 0, 0.1),
-  0 48px 96px rgba(0, 0, 0, 0.08)
-`
-
 export function LinkCard({ title, description, href, icon: Icon }: LinkCardProps) {
-  const navigate = useNavigate()
-  const isInternal = href.startsWith("/")
-
-  const handleClick = (e: React.MouseEvent) => {
-    if (isInternal) {
-      e.preventDefault()
-      navigate(href)
-    }
-  }
-
   return (
     <motion.a
       href={href}
-      target={isInternal ? undefined : "_blank"}
-      rel={isInternal ? undefined : "noopener noreferrer"}
-      onClick={handleClick}
+      target="_blank"
+      rel="noopener noreferrer"
       className="group relative flex w-full items-center gap-4 rounded-[20px] px-4 py-4 overflow-hidden"
-      style={cardStyle}
-      whileHover={{ scale: 1.02, y: -4, boxShadow: hoverBoxShadow }}
-      whileTap={{ scale: 0.98, y: 0 }}
-      transition={{ type: "spring", stiffness: 500, damping: 30 }}
+      style={{
+        background: "rgba(255, 255, 255, 0.45)",
+        backdropFilter: "blur(40px) saturate(180%)",
+        WebkitBackdropFilter: "blur(40px) saturate(180%)",
+        boxShadow: `
+          inset 0 1px 1px rgba(255, 255, 255, 0.9),
+          inset 0 -1px 1px rgba(255, 255, 255, 0.1),
+          0 0 0 1px rgba(255, 255, 255, 0.6),
+          0 2px 4px rgba(0, 0, 0, 0.02),
+          0 4px 8px rgba(0, 0, 0, 0.04),
+          0 8px 16px rgba(0, 0, 0, 0.06),
+          0 16px 32px rgba(0, 0, 0, 0.08),
+          0 32px 64px rgba(0, 0, 0, 0.06)
+        `,
+        border: "1px solid rgba(255, 255, 255, 0.5)",
+      }}
+      whileHover={{
+        scale: 1.02,
+        y: -4,
+        boxShadow: `
+          inset 0 1px 1px rgba(255, 255, 255, 1),
+          inset 0 -1px 1px rgba(255, 255, 255, 0.2),
+          0 0 0 1px rgba(255, 255, 255, 0.7),
+          0 4px 8px rgba(0, 0, 0, 0.04),
+          0 8px 16px rgba(0, 0, 0, 0.06),
+          0 16px 32px rgba(0, 0, 0, 0.08),
+          0 32px 64px rgba(0, 0, 0, 0.1),
+          0 48px 96px rgba(0, 0, 0, 0.08)
+        `,
+      }}
+      whileTap={{
+        scale: 0.98,
+        y: 0,
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 500,
+        damping: 30,
+      }}
     >
       <div
         className="absolute inset-x-0 top-0 h-[50%] pointer-events-none"
@@ -78,7 +73,9 @@ export function LinkCard({ title, description, href, icon: Icon }: LinkCardProps
 
       <motion.div
         className="absolute inset-0 pointer-events-none rounded-[20px] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        style={{ background: "radial-gradient(ellipse at center, rgba(255,255,255,0.4), transparent 70%)" }}
+        style={{
+          background: "radial-gradient(ellipse at center, rgba(255,255,255,0.4), transparent 70%)",
+        }}
       />
 
       <div
